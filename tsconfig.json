@@ -1,0 +1,19 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,  // you can keep 'strict' mode enabled for other checks
+    "noImplicitAny": false, // disable the 'any' type warning
+    "skipLibCheck": true,  // optional, speeds up compilation for large projects
+    "esModuleInterop": true, // for compatibility with ES modules
+    "target": "ESNext", // specify your target JS version
+    "module": "ESNext",  // module system
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

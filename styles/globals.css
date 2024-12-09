@@ -1,0 +1,18 @@
+@media print {
+  /* Hide everything by default */
+  body > * {
+    display: none;
+  }
+  
+  /* Only show the printable content */
+  .printable-content {
+    display: block !important;
+    padding: 0 !important;
+  }
+  
+  /* Ensure the printable content's parent containers are visible */
+  .printable-content, 
+  .printable-content * {
+    visibility: visible !important;
+  }
+} 
