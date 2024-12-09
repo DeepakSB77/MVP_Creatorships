@@ -5,7 +5,7 @@ import { BiTrendingUp } from 'react-icons/bi';
 import { BsCollection } from 'react-icons/bs';
 
 // Custom hook for responsive chart sizing
-const useChartDimensions = (containerRef) => {
+const useChartDimensions = (containerRef: React.RefObject<HTMLDivElement>) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 250 });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const useChartDimensions = (containerRef) => {
 };
 
 // Define dummy data for each platform
-const platformData = {
+const platformData: Record<string, PlatformData> = {
   all: {
     chartData: [
       { name: 'Jan', value: 1000 },
@@ -70,7 +70,7 @@ const platformData = {
 };
 
 // Function to get data for the selected platform
-const getPlatformData = (platform) => {
+const getPlatformData = (platform: string): PlatformData => {
   return platformData[platform] || platformData.all;
 };
 
@@ -97,8 +97,41 @@ const highlights = [
   // Add more highlights as needed
 ];
 
+// 8. Add missing interfaces
+interface ChartItem {
+  title: string;
+  color: string;
+  data: ChartData[];
+  ref: React.RefObject<HTMLDivElement>;
+  dims: {
+    width: number;
+    height: number;
+  };
+}
+
+interface ChartData {
+  name: string;
+  value: number;
+}
+
+interface PlatformData {
+  chartData: ChartData[];
+  audienceData: {
+    gender: DemographicItem[];
+    age: DemographicItem[];
+    interests: DemographicItem[];
+    location: DemographicItem[];
+  };
+}
+
+// 2. Add proper types for map functions
+interface DemographicItem {
+  label: string;
+  percentage: number;
+}
+
 export default function MediaKit() {
-  const [selectedPlatform, setSelectedPlatform] = useState('all');
+  const [selectedPlatform] = useState<string>('all');
   const { chartData, audienceData } = getPlatformData(selectedPlatform);
 
   const chartRef1 = useRef(null);
@@ -163,7 +196,7 @@ export default function MediaKit() {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {charts.map((chart, index) => (
+          {charts.map((chart: ChartItem, index: number) => (
             <div 
               key={index}
               ref={chart.ref}
@@ -222,7 +255,7 @@ export default function MediaKit() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Gender</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {audienceData.gender.map((item, index) => (
+              {audienceData.gender.map((item: DemographicItem, index: number) => (
                 <div key={index} className="bg-gray-50 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-600">{item.label}</span>
@@ -243,7 +276,7 @@ export default function MediaKit() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Age</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {audienceData.age.map((item, index) => (
+              {audienceData.age.map((item: DemographicItem, index: number) => (
                 <div key={index} className="bg-gray-50 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-600">{item.label}</span>
@@ -264,7 +297,7 @@ export default function MediaKit() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Interests</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {audienceData.interests.map((item, index) => (
+              {audienceData.interests.map((item: DemographicItem, index: number) => (
                 <div key={index} className="bg-gray-50 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-600">{item.label}</span>
@@ -287,7 +320,7 @@ export default function MediaKit() {
             <div className="bg-gray-50 rounded-lg p-4">
               {/* Stacked bar */}
               <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden flex">
-                {audienceData.location.map((item, index) => {
+                {audienceData.location.map((item: DemographicItem, index: number) => {
                   // Define complementary colors
                   const colors = [
                     '#FF6B6B', // Coral Red
@@ -318,7 +351,7 @@ export default function MediaKit() {
               
               {/* Labels below the bar */}
               <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {audienceData.location.map((item, index) => {
+                {audienceData.location.map((item: DemographicItem, index: number) => {
                   const colors = [
                     '#FF6B6B',
                     '#4ECDC4',
