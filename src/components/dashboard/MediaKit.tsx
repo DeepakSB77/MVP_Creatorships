@@ -1,8 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FaTwitch, FaYoutube, FaTiktok, FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
+import { useEffect, useState, useRef } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { BiTrendingUp } from 'react-icons/bi';
-import { BsCollection } from 'react-icons/bs';
 
 // Custom hook for responsive chart sizing
 const useChartDimensions = (containerRef: React.RefObject<HTMLDivElement>) => {
